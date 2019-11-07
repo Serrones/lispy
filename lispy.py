@@ -1,14 +1,14 @@
 """Interaction"""
 
 from environment import List
-from eval import eval_lisp
+from eval import eval
 from parsing import parse
 
 
 def repl(prompt='lispy> '):
     "A prompt-read-eval-print loop."
     while True:
-        val = eval_lisp(parse(input(prompt)))
+        val = eval(parse(input(prompt)))
         if val is not None:
             print(lispstr(val))
 

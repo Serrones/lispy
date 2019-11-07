@@ -12,7 +12,7 @@ def tokenize(char):
 
 def read_from_tokens(tokens):
     "Read an expression from a sequence of tokens."
-    if not tokens:
+    if len(tokens) == 0:
         raise SyntaxError('unexpected EOF')
     token = tokens.pop(0)
     if token == '(':

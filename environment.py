@@ -8,6 +8,25 @@ List = list
 Symbol = str
 NUMBER = (int, float)
 
+
+class Env(dict):
+    "An environment: a dict of {'var':val} pairs, with an outer Env."
+    def __init__(self, parms=(), args=(), outer=None):
+        self.update(zip(parms, args))
+        self.outer = outer
+
+    def find(self, var):
+        "Find the innermost Env where var appears."
+        # if var in self:
+        #     return self
+        # else:
+        #     if self.outer:
+        #         return self.outer.find(var)
+        #     else:
+        #         raise ValueError('Expression to be analysed')
+        return self if (var in self) else self.outer.find(var)
+
+
 def standard_env():
     "An environment with some Scheme standard procedures."
     env = Env()
@@ -47,16 +66,5 @@ def standard_env():
         'symbol?': lambda x: isinstance(x, Symbol)
     })
     return env
-
-class Env(dict):
-    "An environment: a dict of {'var':val} pairs, with an outer Env."
-    def __init__(self, parms=(), args=(), outer=None):
-        self.update(zip(parms, args))
-        self.outer = outer
-
-    def find(self, var):
-        "Find the innermost Env where var appears."
-        return self if (var in self) else self.outer.find(var)
-
 
 GLOBAL_ENV = standard_env()
